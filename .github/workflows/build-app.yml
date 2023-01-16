@@ -1,0 +1,46 @@
+name: 'Build app'
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build-app:
+    name: 'Build'
+
+    strategy:
+      matrix:
+        system:
+          - ubuntu-latest
+
+    runs-on: ${{ matrix.system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure depencencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y \
+            llvm \
+            llvm-dev \
+            clang \
+            lld
+        shell: bash
+
+      - name: Build application
+        run: |
+          make
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sys ${{ github.sha }}
+          path: ens1370.sys
