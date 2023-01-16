@@ -1,0 +1,15 @@
+LIBRARY core.dll
+EXPORTS
+    AttachIntHandler
+    GetPCIList
+    GetService
+    RegService
+    PciApi
+    PciRead16
+    PciRead32
+    PciRead8
+    PciWrite16
+    PciWrite32
+    PciWrite8
+    SysMsgBoardStr
+
